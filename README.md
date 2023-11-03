@@ -2,6 +2,8 @@
 
 The name of this JavaScript single-file unit follows the existing naming tradition: &ldquo;modal popup&rdquo; is neither modal nor popup. Unlike `alert` or `prompt`, it just mimics modal behavior in the same browser window.
 
+[Demo](https://sakryukov.github.io/modal-popup-from-scratch/code/demo)
+
 ### Features:
 
 - Button actions
