@@ -92,7 +92,7 @@
 
             addButton("More Styles", () => {
                 p(
-                    p.content = "<b>Modified</b> window and button colors, text alignment, aspect ratio, text colors, padding, border radius for message window and buttons, button spacing, horizontal line thickness and color",
+                    p.content = "<b>Modified</b> window and button colors, text alignment, button focus outline, aspect ratio, text colors, padding, border radius for message window and buttons, button spacing, horizontal line thickness and color",
                     p.buttonDescriptors = [
                         { text: "Yes", action: function () { add("Pressed Yes"); } },
                         { default: true, text: "No", action: function () { add("Pressed No"); } },
@@ -100,6 +100,7 @@
                     ],
                 p.styles = {
                     width: "24em",
+                    buttonFocusOutline: "dotted 5px yellow",
                     thickness: { horizontalLine: "6px", buttonBorder : "4px" },
                     textAlign: "center",
                     backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate", button: "#b3dbff" },
