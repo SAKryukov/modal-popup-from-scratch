@@ -16,6 +16,7 @@ Published: http://www.codeproject.com/Articles/1061121/ModalPopupFromScratch
 const modalPopup = {
 
     version: "3.0",
+    date: 2023,
 
     show: function(content, buttonDescriptors, styles, onEndModalState) {
 

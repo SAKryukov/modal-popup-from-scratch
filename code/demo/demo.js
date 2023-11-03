@@ -8,8 +8,13 @@
         const elements = {
             console: document.querySelector("main > section"),
             buttonParent: document.querySelector("header > section"),
-            scrollParent: document.querySelector("main")
+            scrollParent: document.querySelector("main"),
+            date: document.querySelector("footer small span:first-of-type"),
+            version: document.querySelector("footer small span:last-of-type"),
         } //elements
+
+        elements.date.textContent = modalPopup.date;
+        elements.version.textContent = modalPopup.version;
      
         const demo = () => {
 
