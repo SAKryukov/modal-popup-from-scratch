@@ -1,0 +1,91 @@
+﻿<!--
+
+Modal Popup
+
+v.3.0
+
+Copyright (c) 2015, 2019, 2023 by Sergey A Kryukov
+http://www.SAKryukov.org
+http://www.codeproject.com/Members/SAKryukov
+
+Published: http://www.codeproject.com/Articles/1061121/ModalPopupFromScratch
+
+-->
+<html>
+    <head>
+        <title>Modal Popup Demo</title>
+        <script src="../modal-popup.js"></script>
+        <script src="named-caller.js"></script>
+        <script src="auto-access-key.js"></script>
+        <script src="demo.js"></script>
+        <meta http-equiv=" content-type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            :root {
+                --border: solid thin gray;
+                --padding-header: 0.4em 3.6em 0.4em 0.6em;
+                --padding-wide: 0.6em 1.2em 0.6em 1.2em;
+                --gap-x: 0.4em;
+                --gap-y: 0.2em;
+            }
+            * { padding: 0; margin: 0; box-sizing: border-box; }
+            * { font-family: sans-serif; font-size: 12pt; }
+            html, body { height: 100%; }
+            body { display: flex; flex-flow: column; height: 100%; }
+            main { flex: auto; overflow: auto; background-color: #F0F0F5; }
+            main > section { padding: var(--padding-wide); }
+            header > section, footer { background-color: #FFFFCF; padding: var(--padding-header); }
+            header > section { padding-right: 0; padding-bottom: 0;}
+            header > section { border-bottom: var(--border); }
+            footer { border-top: var(--border); }
+            button { padding-left: var(--gap-x); padding-right: var(--gap-x);}
+            button.noFrame { border: none; background-color: transparent;
+                margin: 0; padding: 0;
+                text-align: left; color: blue; }
+            p { margin-top: 0; margin-bottom: var(--gap-y); }
+            aside { font-size: 110%; padding: var(--gap-x); }
+            /* "Heavily formatted" sample: */
+            #defineClosing { margin-bottom: 1.6em; }
+            div.insanityLabel { display: table-cell; vertical-align: top; padding-right: 0.6em; }
+            div.insanity { display: table-cell; }
+            option { margin-left: 1em; margin-right: 1em; }
+        </style>
+    </head>
+<body>
+
+    <aside>Sorry, your browser does not support essential required features</aside>
+
+    <header>
+        <section></section>
+    </header>
+    <main>
+        <section>
+            <blockquote id="heavilyFormattedSample">
+                <!-- this element moves to modalPopup via modalPopup.prepareContentById -->
+                <label><input type="checkbox" checked="checked" id="widthToContent" accesskey="W" /> Use
+                    <u>w</u>idth-to-content</label><br />
+                <label><input type="checkbox" checked="checked" id="handleEscape" accesskey="H" /> <u>H</u>andle
+                    Escape</label><br />
+                <label><input type="checkbox" checked="checked" id="defineDefault" accesskey="D" /> <u>D</u>efine
+                    default button</label><br />
+                <label><input type="checkbox" id="disableDrag" accesskey="G" /> Disable dra<u>g</u></label><br />
+                <label><input type="checkbox" checked="checked" id="defineClosing" accesskey="F" /> De<u>f</u>ine
+                    closing action</label>
+                <div class="insanityLabel">Insanity <u>L</u>evel:</div>
+                <div class="insanity">
+                    <select id="insanity" size="3" accesskey="L">
+                        <option>Accentuated</option>
+                        <option>Insane</option>
+                        <option selected="selected">Crazy</option>
+                    </select>
+                </div>
+            </blockquote>
+        </section>
+    </main>
+    <footer>
+        <p>JavaScript "alert" blocks execution flow &mdash; <button class="noFrame" id="tryAlert"><u>try
+                    it</u></button> &mdash; but modal popup doesn't:
+                    <button id="tryNonBlocking">Try</button></p>
+    </footer>
+</body>
+
+</html>
