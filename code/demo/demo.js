@@ -43,12 +43,6 @@
                 modalPopup.show("Some content&hellip;<br/><br/>Try to drag this window with mouse, compare with next demo.<br/><br/>Also try to resize the browser window.");
             });
 
-            addButton("Disabled Drag", () => {
-                modalPopup.show("Disabled drag&hellip;<br/><br/>Try to drag this window with mouse.<br/><br/>Try to resize the browser window &mdash; adjustment of modal popup location always works.",
-                null,
-                { allowDragging: false });
-            });
-
             const p = namedCaller(function(content, buttonDescriptors, styles, endModalStateHandler) {
                 try {
                     modalPopup.show(content, buttonDescriptors, styles, endModalStateHandler);
@@ -90,6 +84,24 @@
                 p.styles = { backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate" } });
             });
 
+            addButton("Modified Dimming", () => {
+                p(
+                    p.content = "Modified dimming color/opacity",
+                    p.styles = { dimmerOpacity: 0.4, dimmerColor: "DarkMagenta", backgroundColor: { message: "black" }, textLineColor: { message: "yellow" } });
+            });
+
+            (function () {
+                const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+                addButton("Long Text, Custom Aspect Ratio", function () { modalPopup.show(loremIpsum, null, { width: "26em" }); });
+            })();
+            
+            addButton("Closing Action", () => {
+                modalPopup.show(
+                    "Notification on closing",
+                    [{ text: "Try it", escape: true, action: function () { add("Button Action"); } }],
+                    { textAlign: "center" }, function () { add("Closing Action"); });
+            });
+
             addButton("More Styles", () => {
                 p(
                     p.content = "<b>Modified</b> window and button colors, text alignment, button focus outline, aspect ratio, text colors, padding, border radius for message window and buttons, button spacing, horizontal line thickness and color",
@@ -114,25 +126,6 @@
                 });
             });
 
-            addButton("Modified Dimming", () => {
-                p(
-                    p.content = "Modified dimming color/opacity",
-                    p.styles = { dimmerOpacity: 0.4, dimmerColor: "DarkMagenta", backgroundColor: { message: "black" }, textLineColor: { message: "yellow" } });
-            });
-
-            (function () {
-                const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-                addButton("Long Text", function () { modalPopup.show(loremIpsum); });
-                addButton("Long Text, Custom Aspect Ratio", function () { modalPopup.show(loremIpsum, null, { width: "26em" }); });
-            })();
-            
-            addButton("Closing Action", () => {
-                modalPopup.show(
-                    "Notification on closing",
-                    [{ text: "Try it", escape: true, action: function () { add("Button Action"); } }],
-                    { textAlign: "center" }, function () { add("Closing Action"); });
-            });
-
             addButton("Formatted", () => {
                 p(
                     p.content = "<h2>You win!</h2><hr/>Do you want to play again?",
@@ -141,7 +134,7 @@
                         { text: "I'm Feeling Lucky :-)", escape: true, access: 12, action: function () { add("Pressed Yes"); } },
                     ],
                 p.styles = {
-                    width: "18em",
+                    width: "22em",
                     textAlign: "center",
                     dimmerOpacity: 0.55,
                     backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate" },
@@ -229,6 +222,12 @@
                         { escape: true, text: "Cancel", action: function () { add("Cancel"); } },
                     ],
                 p.styles = { width: null });
+            }, undefined, true);
+
+            addButton("Disabled Drag", () => {
+                modalPopup.show("Disabled drag&hellip;<br/><br/>Try to drag this window with mouse.<br/><br/>Try to resize the browser window &mdash; adjustment of modal popup location always works.",
+                null,
+                { allowDragging: false });
             });
 
             addButton("No Escape Handling", () => {
@@ -251,7 +250,7 @@
             elements.console.appendChild(p);
             elements.scrollParent.scrollTop = elements.scrollParent.scrollHeight;
         }; //add
-        const addButton = (caption, handler, forceAccessKeyIndex) => {
+        const addButton = (caption, handler, forceAccessKeyIndex, separatorAfter) => {
             const btn = document.createElement("button");
             const access = autoAccessKey.next(caption, forceAccessKeyIndex);
             btn.innerHTML = access.value;
@@ -260,6 +259,10 @@
             btn.style.marginRight = window.getComputedStyle(elements.buttonParent).getPropertyValue("padding-left");
             btn.style.marginBottom = window.getComputedStyle(elements.buttonParent).getPropertyValue("padding-top");
             elements.buttonParent.appendChild(btn);
+            if (separatorAfter) {
+                const separator = document.createElement("nav");
+                elements.buttonParent.appendChild(separator);
+            } //if
             return btn;
         }; //addButton
         const modifyElementAccessKey = (element, forceAccessKeyIndex) => {
