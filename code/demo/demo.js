@@ -243,7 +243,7 @@
 
         }; //demo
 
-        const autoAccessKey = new AutoAccessKey("ijcfn");
+        const autoAccessKey = new AutoAccessKey("ijcfnyT");
         const add = function (content) {
             const p = document.createElement("p");
             p.innerHTML = content;
