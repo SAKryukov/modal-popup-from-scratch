@@ -2,15 +2,16 @@
 
 Modal Popup
 
-v.3.0
+v.3.1
 
-Copyright (c) 2015, 2017, 2019, 2023 by Sergey A Kryukov
+Copyright (c) 2015, 2017, 2019, 2023, 2025 by Sergey A Kryukov
 http://www.SAKryukov.org
 http://www.codeproject.com/Members/SAKryukov
 
 Published: http://www.codeproject.com/Articles/1061121/ModalPopupFromScratch
 
 */
+
 "use strict";
 
 const modalPopup = {
@@ -344,7 +345,8 @@ const modalPopup = {
                             if (this.messageWindow.buttonSet[index].offsetWidth > max)
                                 max = this.messageWindow.buttonSet[index].offsetWidth;
                         for (let index = 0; index < this.messageWindow.buttonSet.length; ++index)
-                            constants.formatSizeProperty(this.messageWindow.buttonSet[index].style.width);
+                            this.messageWindow.buttonSet[index].style.width =
+                                constants.formatSizeProperty(max);
                     } //if style.equalizeButtonWidths
                     if (!effectiveStyles.width) {
                         let max = textPad.offsetWidth;
