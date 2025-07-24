@@ -101,9 +101,9 @@ const modalPopup = {
             this.instance = new function() {
 
                 this.dimmer = document.createElement("div");
-                this.messageWindow = document.createElement("div");
+                this.messageWindow = document.createElement("dialog");
 
-                hide(this.messageWindow);
+                //hide(this.messageWindow);
                 hide(this.dimmer);
                 this.messageWindow.modalPopupControl = this;
 
@@ -210,11 +210,11 @@ const modalPopup = {
                     window.removeEventListener("mousemove", windowMouseMoveHandler);
                     window.removeEventListener("mouseup", windowMouseUpHandler);
                     unblockResponsivenessAll(list);
-                    hide(itself.messageWindow);
+                    itself.messageWindow.close();
                     hide(itself.dimmer);
                     modalPopupIsShowing = false;
                 } //modalClosing
-                const modalClosed = async (focusedElement, messageWindow, endModalStateHandler) => {
+                const modalClosed = (focusedElement, messageWindow, endModalStateHandler) => {
                     if (endModalStateHandler && endModalStateHandler.constructor == Function)
                         endModalStateHandler();
                     messageWindow.innerHTML = null;
@@ -223,7 +223,7 @@ const modalPopup = {
                     });
                 } //modalClosed
 
-                this.show = async function(content, buttonDescriptors, userStyles, endModalStateHandler) {
+                this.show = function(content, buttonDescriptors, userStyles, endModalStateHandler) {
                     if (modalPopupIsShowing) return new Promise();
                     this.messageWindow.onkeydown = null;
                     let effectiveStyles;
@@ -356,7 +356,7 @@ const modalPopup = {
                     this.resizeHandler();
                     if (!defaultButton)
                         defaultButton = lastButton;
-                    show(this.messageWindow);
+                    this.messageWindow.showModal();
                     show(this.dimmer);
                     if (!window.hasEventListenerModalClose) {    
                         window.addEventListener("beforeunload", function() {
