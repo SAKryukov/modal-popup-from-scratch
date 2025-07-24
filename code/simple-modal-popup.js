@@ -37,9 +37,9 @@ const simpleModalDialog = (() => {
 
     const defaultButton = text => {
         return {
-                text: "Close",
-                isDefault: true, isEnter: true, isEscape: true, noClosing: false,
-                action: undefined,
+            text: "Close",
+            isDefault: true, isEnter: true, isEscape: true, noClosing: false,
+            action: undefined,
         };
     }; //defaultButton
 
@@ -54,6 +54,8 @@ const simpleModalDialog = (() => {
         options: {
             equalButtonWidths: true,
             cssClasses: definitionSet.empty,
+            initialFocusQuery: null,
+            focusActerAction: null,
         },
     }; //defaults
 
@@ -61,6 +63,8 @@ const simpleModalDialog = (() => {
         dialog: null,
         messageSection: null,
         buttonSection: null,
+        initialFocusElement: null,
+        focusElementOnClose: null,
     }; //elementSet
 
     const buttonSet = {
@@ -89,10 +93,24 @@ const simpleModalDialog = (() => {
         }; //elementSet.dialog.onkeydown
     }; //setupDialog
 
+    const cleanUp = () => {
+        elementSet.dialog.classList.value = definitionSet.empty;
+        elementSet.initialFocusElement = null;
+        elementSet.focusElementOnClose = null;
+    } //cleanUp
+
+    const close = () => {
+        elementSet.dialog.close();
+        if (elementSet.focusElementOnClose)
+            elementSet.focusElementOnClose.focus();
+    }; //close
+
     const show = (htmlContent, detail = defaults) => {
         if (elementSet.dialog == null)
             setupDialog();
-        elementSet.dialog.classList.value = definitionSet.empty;
+        cleanUp();
+        if (detail && detail.options)
+            elementSet.focusElementOnClose = detail.options.focusActerAction;
         if (detail && detail.options && detail.options.cssClasses) {
             const classes = detail.options.cssClasses.split(definitionSet.cssClassSeparator);
             for (let className of classes)
@@ -116,7 +134,7 @@ const simpleModalDialog = (() => {
                 button.onclick = event => {
                     const descriptor = buttonMap.get(event.target);
                     if (!descriptor || !descriptor.noClosing)
-                        elementSet.dialog.close();
+                        close();
                     if (descriptor && descriptor.action)
                         descriptor.action(event.target);
                 }; //button.onclick
@@ -133,11 +151,16 @@ const simpleModalDialog = (() => {
             for (let button of buttons)
                 button.style.width = definitionSet.toPixel(max);
         } //if
-        if (!focusButton)
+        if (detail && detail.options && detail.options.initialFocusQuery)
+            elementSet.initialFocusElement = elementSet.dialog.querySelector(detail.options.initialFocusQuery);
+        if (!focusButton && elementSet.buttonSection.firstChild)
             focusButton = elementSet.buttonSection.firstChild;
-        focusButton.focus();
+        if (elementSet.initialFocusElement)
+            focus(elementSet.initialFocusElement)
+        else if (focusButton)
+            focusButton.focus();
     }; //this.show
 
-    return { show };
+    return { show, defaultButton };
 
 })(); //simpleModalDialog
