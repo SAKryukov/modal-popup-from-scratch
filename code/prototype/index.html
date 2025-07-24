@@ -6,10 +6,10 @@
         <style>
             * { font-family: sans-serif; }
             dialog p { margin: 0; margin-bottom: 0.4em; }
-            dialog { padding: 0; border: solid thin black; border-radius: 8px; outline: none; }
+            dialog { padding: 0; border: none; border-radius: 8px; outline: none; }
             dialog > section { padding: 1em; padding-top: 0.4em; padding-bottom: 0.4em; }
             dialog > section:first-child { background-color: whitesmoke; }
-            dialog > section:last-child { background-color: yellow; border-top: black solid thin; display: flex; justify-content: space-around; }
+            dialog > section:last-child { background-color: lightgray; border-top: black solid thin; display: flex; justify-content: space-around; }
             dialog button {
                 border: solid thin black; 
                 padding-left: 1em;
@@ -20,6 +20,9 @@
             }
             dialog button:first-of-type { margin-left: 0; }
             dialog button:focus { outline: solid thin black; }
+            dialog button:hover { background-color: lightblue; }
+            dialog button:active { background-color: blueviolet; color: white; }
+            dialog::backdrop { background-color: #402030; opacity: 0.4;
         </style>
     </head>
     <body>
