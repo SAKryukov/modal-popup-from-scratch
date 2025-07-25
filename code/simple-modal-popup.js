@@ -19,15 +19,19 @@ const simpleModalDialog = (() => {
             Enter: 0, Escape: 0,
         },
         names: {
-            Close: 0
+            Close: 0,
+            Copy: 0,
+            absolute: 0,
         },
         tags: {
             dialog: 0,
             section: 0,
             button: 0,
+            aside: 0,
         },
         cssClassSeparator: ` `,
         empty: ``,
+        codePointClipboard: 0x1f4cb,
         toPixel: value => `${value}px`,
         setup: function() {
             for (let constantSet of [this.keys, this.tags, this.names])
@@ -90,6 +94,13 @@ const simpleModalDialog = (() => {
             if (event.code == definitionSet.keys.Escape || event.code == definitionSet.keys.Enter)
                 event.preventDefault();
         }; //elementSet.dialog.onkeydown
+        const copyElement = document.createElement(definitionSet.tags.aside);
+        copyElement.textContent = String.fromCodePoint(definitionSet.codePointClipboard);
+        copyElement.style.position = definitionSet.names.absolute;
+        copyElement.title = definitionSet.names.Copy;
+        elementSet.dialog.appendChild(copyElement);
+        copyElement.onclick = () => 
+            navigator.clipboard.writeText(elementSet.messageSection.innerHTML);
     }; //setupDialog
 
     const cleanUp = () => {
