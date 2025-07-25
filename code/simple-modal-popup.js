@@ -33,13 +33,14 @@ const simpleModalDialog = (() => {
         empty: ``,
         codePointClipboard: 0x1f4cb,
         toPixel: value => `${value}px`,
+        translate: (x, y) => `translate(${x}px, ${y}px)`,
         setup: function() {
             for (let constantSet of [this.keys, this.tags, this.names])
                 for (let index in constantSet)
                     constantSet[index] = index;
             Object.freeze(this);
         }, //setup
-    };
+    }; //definitionSet
     definitionSet.setup();
 
     const defaultSingleButton = text => {
@@ -55,6 +56,10 @@ const simpleModalDialog = (() => {
         cssClasses: definitionSet.empty,
         initialFocusQuery: null,
         focusActerAction: null,
+        drag: {
+            isEnabled: true,
+            usePreviousPosition: true,
+        },
     }; //defaultOptions
 
     const defaults = {
@@ -78,6 +83,35 @@ const simpleModalDialog = (() => {
             this.escapeKey = null;
         }, //reset
     }; //buttonSet
+
+    const state = {
+        previousMessage: null,
+        isDragging: false,
+        previousDragX: null,
+        previousDragY: null,
+        dialogX: 0,
+        dialogY: 0,
+        dragX: 0,
+        dragY: 0,
+        reset: function() {
+            this.isDragging = false;
+            this.previousDragX = null;
+            this.previousDragY = null;
+            this.dialogX = 0;
+            this.dialogY = 0;
+            //this.dragX = 0;
+            //this.dragY = 0;
+        }, //reset
+    }; //state
+
+    window.onpointermove = event => {
+        if (!state.isDragging) return;
+        const dx = event.clientX - state.previousDragX;
+        const dy = event.clientY - state.previousDragY;
+        state.dragX = state.dialogX + dx;
+        state.dragY = state.dialogY + dy;
+        elementSet.dialog.style.transform = definitionSet.translate(state.dragX, state.dragY);
+    }; //window.onpointermove
 
     const setupDialog = () => {
         elementSet.dialog = document.createElement(definitionSet.tags.dialog);
@@ -113,6 +147,8 @@ const simpleModalDialog = (() => {
         elementSet.dialog.close();
         if (elementSet.focusElementOnClose)
             elementSet.focusElementOnClose.focus();
+        state.reset();
+        elementSet.dialog.style.transform = null;
     }; //close
 
     const specialize = (defaultValue, value) => {
@@ -191,6 +227,20 @@ const simpleModalDialog = (() => {
             else if (focusButton)
                 focusButton.focus();
         }; //restoreFocus
+        const canRestoreDrag = state.previousMessage == htmlContent;
+        state.previousMessage = htmlContent;
+        if (canRestoreDrag && detail.options.drag.usePreviousPosition)
+            elementSet.dialog.style.transform = definitionSet.translate(state.dragX, state.dragY);
+        if (detail.options.drag.isEnabled) {
+            elementSet.messageSection.onpointerdown = event => {
+                //if (event.target != event.currentTarget) return;
+                state.isDragging = true;
+                state.previousDragX = event.clientX - state.dragX;
+                state.previousDragY = event.clientY - state.dragY;
+            }; //elementSet.messageSection.onpointerdown
+            elementSet.messageSection.onpointerup = event =>
+               state.isDragging = false;
+        }; //if
         restoreFocus();
         elementSet.dialog.onfocus = () => restoreFocus();
     }; //this.show
