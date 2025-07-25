@@ -9,7 +9,7 @@ window.onload = () => {
 
     elementSet.buttonShow.onclick = () =>
         simpleModalDialog.show(
-            `<p>aaa</p><p>bb</p>
+            `<p>Not so long text</p><p>&hellip;more</p>
             <p><input></input></p>`,
             {
                 buttons: [

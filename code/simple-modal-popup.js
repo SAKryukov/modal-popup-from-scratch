@@ -185,10 +185,14 @@ const simpleModalDialog = (() => {
             elementSet.initialFocusElement = elementSet.messageSection.querySelector(detail.options.initialFocusQuery);
         if (!focusButton && elementSet.buttonSection.firstChild)
             focusButton = elementSet.buttonSection.firstChild;
-        if (elementSet.initialFocusElement)
-            focus(elementSet.initialFocusElement)
-        else if (focusButton)
-            focusButton.focus();
+        const restoreFocus = () => {
+            if (elementSet.initialFocusElement)
+                elementSet.initialFocusElement.focus();
+            else if (focusButton)
+                focusButton.focus();
+        }; //restoreFocus
+        restoreFocus();
+        elementSet.dialog.onfocus = () => restoreFocus();
     }; //this.show
 
     const result = { show, defaultButton };
