@@ -2,6 +2,13 @@
 
     window.onload = () => {
 
+        const definitionSet = {
+            colors: {
+                message: "Cornsilk",
+                buttonPad: "hsl(6, 70%, 40%, 100%)",
+            }, //colors
+        }; //definitionSet
+
         if (namedCaller && modalPopup && AutoAccessKey)
             document.querySelector("aside").style.display = "none";
     
@@ -59,7 +66,7 @@
                         { default: true, text: "No" },
                         { escape: true, text: "Close" }
                     ],
-                p.styles = { backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate" } });
+                p.styles = { backgroundColor: { message: definitionSet.colors.message, buttonPad: "hsl(6, 70%, 40%, 100%)" } });
             }, 7);
 
             addButton("Changed Access Key", () => {
@@ -70,7 +77,7 @@
                         { default: true, text: "No" },
                         { escape: true, text: "Close" }
                     ],
-                p.styles = { backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate" } });
+                p.styles = { backgroundColor: { message: definitionSet.colors.message, buttonPad: definitionSet.colors.buttonPad } });
             });
 
             addButton("Button Actions", () => {
@@ -81,7 +88,7 @@
                         { default: true, text: "No", action: function () { add("Pressed No"); } },
                         { escape: true, text: "Close", action: function () { add("Pressed Close"); } }
                     ],
-                p.styles = { backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate" } });
+                p.styles = { backgroundColor: { message: definitionSet.colors.message, buttonPad: definitionSet.colors.buttonPad } });
             });
 
             addButton("Modified Dimming", () => {
@@ -115,7 +122,7 @@
                     buttonFocusOutline: "dotted 5px yellow",
                     thickness: { horizontalLine: "6px", buttonBorder : "4px" },
                     textAlign: "center",
-                    backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate", button: "#b3dbff" },
+                    backgroundColor: { message: definitionSet.colors.message, buttonPad: definitionSet.colors.buttonPad, button: "#b3dbff" },
                     textLineColor: { message: "brown", horizontalLine: "saddleBrown", button: "navy", buttonBorder: "maroon" },
                     borderRadius: { window: 0, button: "16px" },
                     padding: {
@@ -137,7 +144,7 @@
                     width: "22em",
                     textAlign: "center",
                     dimmerOpacity: 0.55,
-                    backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate" },
+                    backgroundColor: { message: definitionSet.colors.message, buttonPad: definitionSet.colors.buttonPad },
                     padding: {
                         buttonSpacing: "1.2em",
                         button: { horizontal: "1.0em", vertical: "0.2em" }
@@ -202,7 +209,7 @@
                     width: null,
                     textAlign: "center",
                     equalizeButtonWidths: true,
-                    backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate" },
+                    backgroundColor: { message: definitionSet.colors.message, buttonPad: definitionSet.colors.buttonPad },
                     padding: {
                         buttonSpacing: "1.2em",
                         button: { horizontal: "1.0em", vertical: "0.2em" },
@@ -238,7 +245,7 @@
                         { text: "No", action: function () { add("Pressed No"); } },
                         { text: "Close", action: function () { add("Pressed Close"); } }
                     ],
-                    p.styles = { backgroundColor: { message: "Cornsilk", buttonPad: "Chocolate" } });
+                    p.styles = { backgroundColor: { message: definitionSet.colors.message, buttonPad: definitionSet.colors.buttonPad } });
             });
 
         }; //demo

@@ -14,7 +14,10 @@ window.onload = () => {
             {
                 buttons: [
                     { text: "Close", noClosing: false, isEscape: true },
-                    { text: "Some long action", isEnter: 1, isDefault: 1, action: button => simpleModalDialog.show(button.textContent)  },
+                    { text: "Some long action",
+                        isEnter: 1, isDefault: 1,
+                        action: button =>
+                            simpleModalDialog.show(button.textContent, { options: {cssClasses: "different"}})  },
                 ],
                 options: {
                     initialFocusQuery: "input",

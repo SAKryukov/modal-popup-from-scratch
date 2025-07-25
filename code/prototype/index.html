@@ -23,12 +23,12 @@
                 padding-right: var(--horizontal-gap);
                 padding-top: var(--vertical-gap);
                 padding-bottom: var(--vertical-gap);
-                border-radius: 0;
+                border-radius: 4.1px;
                 white-space: nowrap;
                 margin-left: var(--horizontal-gap);
             }
             dialog button:first-of-type { margin-left: 0; }
-            dialog button:focus { outline: solid thin black; }
+            dialog button:focus { outline: solid 2px ghostwhite; }
             dialog button:hover { background-color: lightblue; }
             dialog button:active { background-color: purple; color: white; }
             ::backdrop { background-color:  hsl(300, 30%, 15%, 100%); opacity: 0.5; }
@@ -39,6 +39,8 @@
             }
             dialog aside:hover { opacity: 1; }
             dialog aside:active { background-color: red; }
+            dialog.different > section:first-of-type { background-color: Cornsilk; padding-top: var(--vertical-gap-clipboard); }
+            dialog.different > section:last-of-type { background-color: hsl(6, 70%, 40%, 100%); border-top: black solid thin; display: flex; justify-content: space-around; }
         </style>
     </head>
     <body>
