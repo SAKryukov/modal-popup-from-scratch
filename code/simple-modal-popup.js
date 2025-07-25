@@ -42,7 +42,7 @@ const simpleModalDialog = (() => {
     };
     definitionSet.setup();
 
-    const defaultButton = text => {
+    const defaultSingleButton = text => {
         return {
             text: text,
             isDefault: true, isEnter: true, isEscape: true, noClosing: false,
@@ -58,7 +58,7 @@ const simpleModalDialog = (() => {
     }; //defaultOptions
 
     const defaults = {
-        buttons: [ defaultButton(definitionSet.names.Close) ],
+        buttons: [ defaultSingleButton(definitionSet.names.Close) ],
         options: defaultOptions,
     }; //defaults
 
@@ -195,9 +195,9 @@ const simpleModalDialog = (() => {
         elementSet.dialog.onfocus = () => restoreFocus();
     }; //this.show
 
-    const result = { show, defaultButton };
+    const result = { show, defaultSingleButton };
     Object.defineProperties(result, {
-        defaultButtons: { get() { return defaultButton(definitionSet.names.Close); } },
+        defaultButtons: { get() { return [ defaultSingleButton(definitionSet.names.Close) ]; } },
         defaultOptions: { get() { return defaultOptions; } },
         defaults: { get() { return defaults; } },
     });
