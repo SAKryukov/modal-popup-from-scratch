@@ -2,7 +2,7 @@
 
 window.onload = () => {
 
-    const elementSet = {
+    const elementSet =  {
         sample: document.body.querySelector("textarea"),
         buttonShow: document.body.querySelector("button"),
     };
@@ -17,8 +17,6 @@ window.onload = () => {
                     { text: "Some long action", isEnter: 1, isDefault: 1, action: button => simpleModalDialog.show(button.textContent)  },
                 ],
                 options: {
-                    equalButtonWidths: true,
-                    cssClasses: "a   b",
                     initialFocusQuery: "input",
                     focusActerAction: elementSet.sample,
                 },

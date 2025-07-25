@@ -104,14 +104,28 @@ const simpleModalDialog = (() => {
             elementSet.focusElementOnClose.focus();
     }; //close
 
+    const specialize = (defaultValue, value) => {
+        if (value == null) return defaultValue;
+        const newValue = {};
+        for (let index in defaultValue) {
+            if (value[index] !== undefined) {
+                if (value[index] != null &&
+                    defaultValue[index] != null &&
+                    value[index].constructor == Object &&
+                    defaultValue[index].constructor == Object)
+                    newValue[index] = specialize(defaultValue[index], value[index]);
+                else
+                    newValue[index] = value[index];
+            } else
+                newValue[index] = defaultValue[index];
+        } //loop
+        return newValue;
+    } //specialize
+
     const show = (htmlContent, detail = defaults) => {
-        if (!detail)
-            detail = defaults;
-        //SA??? do structured clone of detail here
-        if (!detail.options)
-            detail.options = defaultOptions;
-        if (!detail.buttons)
-            detail.buttons = [ defaultButton ];
+        detail = detail
+            ? specialize(defaults, detail)
+            : defaults
         if (elementSet.dialog == null)
             setupDialog();
         cleanUp();
