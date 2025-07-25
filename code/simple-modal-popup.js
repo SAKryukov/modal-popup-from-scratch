@@ -18,6 +18,9 @@ const simpleModalDialog = (() => {
         keys: {
             Enter: 0, Escape: 0,
         },
+        names: {
+            Close: 0
+        },
         tags: {
             dialog: 0,
             section: 0,
@@ -27,7 +30,7 @@ const simpleModalDialog = (() => {
         empty: ``,
         toPixel: value => `${value}px`,
         setup: function() {
-            for (let constantSet of [this.keys, this.tags])
+            for (let constantSet of [this.keys, this.tags, this.names])
                 for (let index in constantSet)
                     constantSet[index] = index;
             Object.freeze(this);
@@ -37,26 +40,22 @@ const simpleModalDialog = (() => {
 
     const defaultButton = text => {
         return {
-            text: "Close",
+            text: text,
             isDefault: true, isEnter: true, isEscape: true, noClosing: false,
             action: undefined,
         };
     }; //defaultButton
 
+    const defaultOptions = {
+        equalButtonWidths: true,
+        cssClasses: definitionSet.empty,
+        initialFocusQuery: null,
+        focusActerAction: null,
+    }; //defaultOptions
+
     const defaults = {
-        buttons: [
-            {
-                text: "Close",
-                isDefault: true, isEnter: true, isEscape: true, noClosing: false,
-                action: button => console.log(button.textContent)
-            },
-        ],
-        options: {
-            equalButtonWidths: true,
-            cssClasses: definitionSet.empty,
-            initialFocusQuery: null,
-            focusActerAction: null,
-        },
+        buttons: [ defaultButton(definitionSet.names.Close) ],
+        options: defaultOptions,
     }; //defaults
 
     const elementSet = {
@@ -106,12 +105,18 @@ const simpleModalDialog = (() => {
     }; //close
 
     const show = (htmlContent, detail = defaults) => {
+        if (!detail)
+            detail = defaults;
+        //SA??? do structured clone of detail here
+        if (!detail.options)
+            detail.options = defaultOptions;
+        if (!detail.buttons)
+            detail.buttons = [ defaultButton ];
         if (elementSet.dialog == null)
             setupDialog();
         cleanUp();
-        if (detail && detail.options)
-            elementSet.focusElementOnClose = detail.options.focusActerAction;
-        if (detail && detail.options && detail.options.cssClasses) {
+        elementSet.focusElementOnClose = detail.options.focusActerAction;
+        if (detail.options.cssClasses) {
             const classes = detail.options.cssClasses.split(definitionSet.cssClassSeparator);
             for (let className of classes)
                 if (className)
@@ -122,7 +127,7 @@ const simpleModalDialog = (() => {
         elementSet.buttonSection.innerHTML = null;
         const buttonMap = new Map();
         buttonSet.reset();
-        if (detail && detail.buttons && detail.buttons.length) 
+        if (detail.buttons.length && detail.buttons.length > 0)
             for (let buttonDescriptor of detail.buttons) {
                 const button = document.createElement(definitionSet.tags.button);
                 if (buttonDescriptor.isEnter)
@@ -143,7 +148,7 @@ const simpleModalDialog = (() => {
                     focusButton = button;
             } //loop
         elementSet.dialog.showModal();
-        if (detail && detail.options && detail.options.equalButtonWidths) {
+        if (detail.options.equalButtonWidths) {
             let buttons = buttonMap.keys().toArray();
             let max = 0;
             for (let button of buttons)
@@ -151,7 +156,7 @@ const simpleModalDialog = (() => {
             for (let button of buttons)
                 button.style.width = definitionSet.toPixel(max);
         } //if
-        if (detail && detail.options && detail.options.initialFocusQuery)
+        if (detail.options.initialFocusQuery)
             elementSet.initialFocusElement = elementSet.dialog.querySelector(detail.options.initialFocusQuery);
         if (!focusButton && elementSet.buttonSection.firstChild)
             focusButton = elementSet.buttonSection.firstChild;
@@ -161,6 +166,13 @@ const simpleModalDialog = (() => {
             focusButton.focus();
     }; //this.show
 
-    return { show, defaultButton };
+    const result = { show, defaultButton };
+    Object.defineProperties(result, {
+        defaultButtons: { get() { return defaultButton(definitionSet.names.Close); } },
+        defaultOptions: { get() { return defaultOptions; } },
+        defaults: { get() { return defaults; } },
+    });
+
+    return result;
 
 })(); //simpleModalDialog
