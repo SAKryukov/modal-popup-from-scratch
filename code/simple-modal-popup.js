@@ -157,7 +157,7 @@ const simpleModalDialog = (() => {
                 button.style.width = definitionSet.toPixel(max);
         } //if
         if (detail.options.initialFocusQuery)
-            elementSet.initialFocusElement = elementSet.dialog.querySelector(detail.options.initialFocusQuery);
+            elementSet.initialFocusElement = elementSet.messageSection.querySelector(detail.options.initialFocusQuery);
         if (!focusButton && elementSet.buttonSection.firstChild)
             focusButton = elementSet.buttonSection.firstChild;
         if (elementSet.initialFocusElement)
