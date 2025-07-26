@@ -28,7 +28,7 @@ dialog button:active { background-color: purple; color: white; }
 dialog aside { /* copy to clipboard element */
     cursor: copy;
     position: absolute;
-    top: 0; right: var(--clipboard-right);
+    top: 0px; right: var(--clipboard-right);
     opacity: 0.6;
 }
 dialog aside:hover { opacity: 1; }

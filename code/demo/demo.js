@@ -246,8 +246,71 @@
                         { text: "Close", action: function () { add("Pressed Close"); } }
                     ],
                     p.styles = { backgroundColor: { message: definitionSet.colors.message, buttonPad: definitionSet.colors.buttonPad } });
-            });
+            }, null, true);
 
+            addButton("<b>Dialog:</b> Default", () => modalDialog.show("Default.<br/>See the cliboard copy button above.<br/>Use it to copy the message."));
+            addButton("<b>Dialog:</b> Multiple buttons, actions", () => 
+                modalDialog.show(`<p>A button can be default, Escape or Enter</p><p><input style="width:100%" value="Press Enter or Escape in this input"/></p>`,
+                    { buttons: [
+                        { text: "Close", isEscape: true },
+                        { text: "Default button, pre-focused", isDefault: true,
+                            action: () => add("Default button"),
+                        },
+                        { text: "Another dialog&hellip;",
+                            isEnter: true,
+                            action: () => modalDialog.show("Default dialog in different style", { options: { cssClasses: "different" }})
+                        },
+                    ],
+                    options: { equalButtonWidths: false },
+                }));
+            addButton("<b>Dialog:</b> Equalized button widths", () => {
+                modalDialog.show("Equalized button widths,<br>the first button is Escape", { buttons: [
+                    { text: "Close", isEscape: true },
+                    { text: "A", action: button => add(button.textContent), isDefault: true },
+                    { text: "B", action: button => add(button.textContent), },
+                ]});
+            }); 
+            addButton("<b>Dialog:</b> Multiline buttons", () => {
+                modalDialog.show("Multiline buttons", {
+                    buttons: [
+                        { text: "Close", isEscape: true },
+                        { text: "Two<br>Lines", isDefault: true },
+                    ],  
+                });
+            });
+            addButton("<b>Dialog:</b> Disabled dragging", () => {
+                modalDialog.show("<p>Previous dialog samples can be dragged</p><p>For this sample, dragging is disabled.</p>",
+                    { options: { drag: { isEnabled: false } } });
+            });
+            addButton("<b>Dialog:</b> Reset position after dragging", () => {
+                modalDialog.show(`<p>In other dialog samples, the position after dragging is remembered for the same message content.<p>
+                    </p>This feature can be disabled, so the dialog is shown again in the center of the screen.</p>`,
+                    { options: { drag: { usePreviousPosition: false } } });
+            });
+            addButton("<b>Dialog:</b> Multipe styles", () => 
+                modalDialog.show(`<p>A dialog can use alternative different CSS styles.<br/>One or more styles can be listed, separated by a blankspace.</p>`,
+                    { buttons: [
+                        { text: "Close", isEscape: true },
+                        { text: "Default button, pre-focused", isDefault: true,
+                            action: () => add("Default button"),
+                        },
+                        { text: "Another dialog&hellip;",
+                            isEnter: true,
+                            action: () => modalDialog.show("Default dialog in different style", { options: { cssClasses: "different" }})
+                        },
+                    ],
+                    options: { equalButtonWidths: false, cssClasses: "different" },
+                }));
+            addButton("<b>Dialog:</b> No-close buttons", () => {
+                modalDialog.show(`Some buttons can work without closing the dialog.<br/>
+                    Also note that Escape does not close this dialog,<br/>
+                    because none of the buttons is an Escape button.`, {
+                    buttons: [
+                        { text: "Non-closing button", noClosing: true, action: button => add(button.textContent) },
+                        { text: "Normal closing button", noClosing: false, action: button => add(button.textContent) },
+                    ],
+                });
+            });                
         }; //demo
 
         const autoAccessKey = new AutoAccessKey("ijcfnyT");
