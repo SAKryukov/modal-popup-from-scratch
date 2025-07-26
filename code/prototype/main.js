@@ -8,7 +8,7 @@ window.onload = () => {
     };
 
     elementSet.buttonShow.onclick = () =>
-        simpleModalDialog.show(
+        modalDialog.show(
             `<p>Not so long text</p><p>&hellip;more</p>
             <p><input></input></p>`,
             {
@@ -17,7 +17,7 @@ window.onload = () => {
                     { text: "Some long action",
                         isEnter: 1, isDefault: 1,
                         action: button =>
-                            simpleModalDialog.show(button.textContent, { options: {cssClasses: "different"}})  },
+                            modalDialog.show(button.textContent, { options: {cssClasses: "different"}})  },
                 ],
                 options: {
                     initialFocusQuery: "input",

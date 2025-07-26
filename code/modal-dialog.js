@@ -1,6 +1,7 @@
 /*
 
 Simple Modal Popup
+Modal Dialog
 
 v.1.0
 
@@ -12,7 +13,7 @@ https://www.codeproject.com/Members/SAKryukov
 
 "use strict";
 
-const simpleModalDialog = (() => {
+const modalDialog = (() => {
 
     const definitionSet = {
         keys: {
@@ -254,4 +255,4 @@ const simpleModalDialog = (() => {
 
     return result;
 
-})(); //simpleModalDialog
+})(); //modalDialog
