@@ -22,6 +22,7 @@ const simpleModalDialog = (() => {
             Close: 0,
             Copy: 0,
             absolute: 0,
+            pointermove: 0,
         },
         tags: {
             dialog: 0,
@@ -101,13 +102,13 @@ const simpleModalDialog = (() => {
         }, //restore
     }; //state
 
-    window.onpointermove = event => {
+    window.addEventListener(definitionSet.names.pointermove, event => {
         if (!state.isDragging) return;
         const dx = event.clientX - state.previousDrag.x;
         const dy = event.clientY - state.previousDrag.y;
         state.drag = { x:dx, y:dy };
-        elementSet.dialog.style.transform = definitionSet.translate(state.drag.x, state.drag.y  );
-    }; //window.onpointermove
+        elementSet.dialog.style.transform = definitionSet.translate(state.drag.x, state.drag.y);
+    }); //window.onpointermove
 
     const setupDialog = () => {
         elementSet.dialog = document.createElement(definitionSet.tags.dialog);
@@ -230,14 +231,14 @@ const simpleModalDialog = (() => {
             elementSet.dialog.style.transform = definitionSet.translate(state.drag.x, state.drag.y);
         } //if
         if (detail.options.drag.isEnabled) {
-            elementSet.messageSection.onpointerdown = event => {
+            elementSet.dialog.onpointerdown = event => {
                 if (event.target.value != undefined) return;
-                if (event.target.parentElement.open != undefined) return; // summary in <detail>
+                if (event.target.parentElement instanceof HTMLDetailsElement) return; // summary in <detail>
                 state.isDragging = true;
                 state.previousDrag.x = event.clientX - state.drag.x;
                 state.previousDrag.y = event.clientY - state.drag.y;
-            }; //elementSet.messageSection.onpointerdown
-            elementSet.messageSection.onpointerup = () =>
+            }; //elementSet.dialog.onpointerdown
+            elementSet.dialog.onpointerup = () =>
                state.isDragging = false;
         }; //if
         restoreFocus();
