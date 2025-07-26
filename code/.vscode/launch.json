@@ -8,12 +8,6 @@
             "name": "Index",
             "file": "${workspaceFolder}/demo/index.html",
         },
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Prototype",
-            "file": "${workspaceFolder}/prototype/index.html",
-        }
-    ],
+w    ],
 }
 

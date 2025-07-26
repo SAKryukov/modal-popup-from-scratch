@@ -1,9 +1,8 @@
 /*
 
-Simple Modal Popup
 Modal Dialog
 
-v.1.0
+v.4.0
 
 Copyright (c) 2025 by Sergey A Kryukov
 https://www.SAKryukov.org

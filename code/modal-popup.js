@@ -2,7 +2,7 @@
 
 Modal Popup
 
-v.3.1
+v.4.0
 
 Copyright (c) 2015, 2017, 2019, 2023, 2025 by Sergey A Kryukov
 https://www.SAKryukov.org
@@ -16,8 +16,8 @@ Published: https://sakryukov.github.io/publications/2015-12-02.Modal-Popup-From-
 
 const modalPopup = {
 
-    version: "3.0",
-    date: 2023,
+    version: "4.0",
+    date: 2025,
 
     show: function(content, buttonDescriptors, styles, onEndModalState, focusReturnElement) {
 
