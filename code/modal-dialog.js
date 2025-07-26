@@ -55,7 +55,7 @@ const modalDialog = (() => {
     const defaultOptions = {
         equalButtonWidths: true,
         cssClasses: definitionSet.empty,
-        initialFocusQuery: null,
+        initialFocus: null, // HTMLElement or query string for QuerySelector
         focusActerAction: null,
         drag: {
             isEnabled: true,
@@ -166,7 +166,21 @@ const modalDialog = (() => {
         return newValue;
     } //specialize
 
-    const show = (htmlContent, detail = defaults) => {
+    const setMessage = message => {
+        if (message.constructor == String)
+            elementSet.messageSection.innerHTML = message;
+        else if (message instanceof HTMLElement)
+            elementSet.messageSection.appendChild(message)
+        else if (message instanceof Array) {
+            for (let element of message)
+                if (!element instanceof HTMLElement) return;
+            for (let element of message)
+                elementSet.messageSection.appendChild(element);
+        } //if
+    }; //setMessage
+    // message is HTML content, HTMLElement or array of HTMLElement:
+
+    const show = (message, detail = defaults) => {
         detail = detail
             ? specialize(defaults, detail)
             : defaults
@@ -181,7 +195,7 @@ const modalDialog = (() => {
                     elementSet.dialog.classList.add(className);
         } //if
         let focusButton = null;
-        elementSet.messageSection.innerHTML = htmlContent;
+        setMessage(message);
         elementSet.buttonSection.innerHTML = null;
         const buttonMap = new Map();
         buttonSet.reset();
@@ -214,8 +228,12 @@ const modalDialog = (() => {
             for (let button of buttons)
                 button.style.width = definitionSet.toPixel(max);
         } //if
-        if (detail.options.initialFocusQuery)
-            elementSet.initialFocusElement = elementSet.messageSection.querySelector(detail.options.initialFocusQuery);
+        if (detail.options.initialFocus) {
+            if (detail.options.initialFocus.constructor == String)
+                elementSet.initialFocusElement = elementSet.messageSection.querySelector(detail.options.initialFocus);
+            else if (detail.options.initialFocus instanceof HTMLElement)
+                elementSet.initialFocusElement = detail.options.initialFocus;
+        } //if
         if (!focusButton && elementSet.buttonSection.firstChild)
             focusButton = elementSet.buttonSection.firstChild;
         const restoreFocus = () => {
@@ -224,8 +242,8 @@ const modalDialog = (() => {
             else if (focusButton)
                 focusButton.focus();
         }; //restoreFocus
-        const canRestoreDrag = state.previousMessage == htmlContent;
-        state.previousMessage = htmlContent;
+        const canRestoreDrag = state.previousMessage == message;
+        state.previousMessage = message;
         if (canRestoreDrag && detail.options.drag.usePreviousPosition) {
             state.restore();
             elementSet.dialog.style.transform = definitionSet.translate(state.drag.x, state.drag.y);

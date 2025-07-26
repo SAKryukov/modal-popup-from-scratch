@@ -280,6 +280,23 @@ window.onload = () => {
                     ],
                     options: { equalButtonWidths: false },
                 }));
+        addButton("<b>Dialog:</b> Pre-focused element", () =>
+            modalDialog.show(`<p>An element inside message can be pre-focused</p><p><input/></p>`,
+                {
+                    buttons: [
+                        { text: "Close", isEscape: true },
+                        {
+                            text: "Default button, pre-focused", isDefault: true,
+                            action: () => add("Default button"),
+                        },
+                        {
+                            text: "Another dialog&hellip;",
+                            isEnter: true,
+                            action: () => modalDialog.show("Default dialog in different style", { options: { cssClasses: "different" } })
+                        },
+                    ],
+                    options: { equalButtonWidths: false, initialFocus: "input" },
+                }));
         addButton("<b>Dialog:</b> Equalized button widths", () => {
             modalDialog.show("Equalized button widths,<br>the first button is Escape", {
                 buttons: [
@@ -332,6 +349,26 @@ window.onload = () => {
                     { text: "Normal closing button", noClosing: false, action: button => add(button.textContent) },
                 ],
             });
+        });
+        addButton("<b>Dialog:</b> HTMLElement message", () => {
+            const elements = [];
+            const p1 = document.createElement("p");
+            p1.textContent = "A message can be a pre-created HTMLElement";
+            elements.push(p1);
+            const p2 = document.createElement("p");
+            p2.textContent = "or an array of HTMLElement.";
+            elements.push(p2);
+            const p3 = document.createElement("p");
+            p3.innerHTML = "<br/>Note that the text area below is pre-focused:";
+            elements.push(p3);
+            const container = document.createElement("div");
+            const textarea = document.createElement("textarea");
+            textarea.value = "Focus is here";
+            textarea.style.width = "100%";
+            container.appendChild(textarea);
+            elements.push(container);
+            modalDialog.show(elements,
+                { options: { initialFocus: textarea }});
         });
     }; //demo
 
