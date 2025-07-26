@@ -87,30 +87,26 @@ const simpleModalDialog = (() => {
     const state = {
         previousMessage: null,
         isDragging: false,
-        previousDragX: null,
-        previousDragY: null,
-        dialogX: 0,
-        dialogY: 0,
-        dragX: 0,
-        dragY: 0,
+        previousDrag: {},
+        savedDrag: {},
+        drag: { x: 0, y: 0 },
         reset: function() {
             this.isDragging = false;
-            this.previousDragX = null;
-            this.previousDragY = null;
-            this.dialogX = 0;
-            this.dialogY = 0;
-            //this.dragX = 0;
-            //this.dragY = 0;
+            this.previousDrag = {};
+            this.savedDrag = structuredClone(this.drag);
+            this.drag = { x: 0, y: 0 };
         }, //reset
+        restore: function() {
+            this.drag = structuredClone(this.savedDrag);
+        }, //restore
     }; //state
 
     window.onpointermove = event => {
         if (!state.isDragging) return;
-        const dx = event.clientX - state.previousDragX;
-        const dy = event.clientY - state.previousDragY;
-        state.dragX = state.dialogX + dx;
-        state.dragY = state.dialogY + dy;
-        elementSet.dialog.style.transform = definitionSet.translate(state.dragX, state.dragY);
+        const dx = event.clientX - state.previousDrag.x;
+        const dy = event.clientY - state.previousDrag.y;
+        state.drag = { x:dx, y:dy };
+        elementSet.dialog.style.transform = definitionSet.translate(state.drag.x, state.drag.y  );
     }; //window.onpointermove
 
     const setupDialog = () => {
@@ -229,16 +225,19 @@ const simpleModalDialog = (() => {
         }; //restoreFocus
         const canRestoreDrag = state.previousMessage == htmlContent;
         state.previousMessage = htmlContent;
-        if (canRestoreDrag && detail.options.drag.usePreviousPosition)
-            elementSet.dialog.style.transform = definitionSet.translate(state.dragX, state.dragY);
+        if (canRestoreDrag && detail.options.drag.usePreviousPosition) {
+            state.restore();
+            elementSet.dialog.style.transform = definitionSet.translate(state.drag.x, state.drag.y);
+        } //if
         if (detail.options.drag.isEnabled) {
             elementSet.messageSection.onpointerdown = event => {
-                //if (event.target != event.currentTarget) return;
+                if (event.target.value != undefined) return;
+                if (event.target.parentElement.open != undefined) return; // summary in <detail>
                 state.isDragging = true;
-                state.previousDragX = event.clientX - state.dragX;
-                state.previousDragY = event.clientY - state.dragY;
+                state.previousDrag.x = event.clientX - state.drag.x;
+                state.previousDrag.y = event.clientY - state.drag.y;
             }; //elementSet.messageSection.onpointerdown
-            elementSet.messageSection.onpointerup = event =>
+            elementSet.messageSection.onpointerup = () =>
                state.isDragging = false;
         }; //if
         restoreFocus();
