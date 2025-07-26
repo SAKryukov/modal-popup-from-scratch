@@ -194,7 +194,7 @@ const modalDialog = (() => {
                 if (buttonDescriptor.isEscape)
                     buttonSet.escapeButton = button;
                 buttonMap.set(button, buttonDescriptor);
-                button.textContent = buttonDescriptor.text;
+                button.innerHTML = buttonDescriptor.text;
                 button.onclick = event => {
                     const descriptor = buttonMap.get(event.target);
                     if (!descriptor || !descriptor.noClosing)
@@ -241,7 +241,8 @@ const modalDialog = (() => {
             }; //elementSet.dialog.onpointerdown
             elementSet.dialog.onpointerup = () =>
                state.isDragging = false;
-        }; //if
+        } else
+            elementSet.dialog.onpointerdown = undefined;
         restoreFocus();
         elementSet.dialog.onfocus = () => restoreFocus();
     }; //this.show
