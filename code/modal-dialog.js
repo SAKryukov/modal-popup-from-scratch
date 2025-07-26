@@ -249,8 +249,8 @@ const modalDialog = (() => {
     const result = { show, defaultSingleButton };
     Object.defineProperties(result, {
         defaultButtons: { get() { return [ defaultSingleButton(definitionSet.names.Close) ]; } },
-        defaultOptions: { get() { return defaultOptions; } },
-        defaults: { get() { return defaults; } },
+        defaultOptions: { get() { return structuredClone(defaultOptions); } },
+        defaults: { get() { return structuredClone(defaults); } },
     });
 
     return result;
