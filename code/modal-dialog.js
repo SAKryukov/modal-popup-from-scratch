@@ -56,7 +56,7 @@ const modalDialog = (() => {
         equalButtonWidths: true,
         cssClasses: definitionSet.empty,
         initialFocus: null, // HTMLElement or query string for QuerySelector
-        focusActerAction: null,
+        focusAfterAction: null,
         drag: {
             isEnabled: true,
             usePreviousPosition: true,
@@ -187,7 +187,7 @@ const modalDialog = (() => {
         if (elementSet.dialog == null)
             setupDialog();
         cleanUp();
-        elementSet.focusElementOnClose = detail.options.focusActerAction;
+        elementSet.focusElementOnClose = detail.options.focusAfterAction;
         if (detail.options.cssClasses) {
             const classes = detail.options.cssClasses.split(definitionSet.cssClassSeparator);
             for (let className of classes)
