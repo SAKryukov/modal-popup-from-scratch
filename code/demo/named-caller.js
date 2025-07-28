@@ -2,12 +2,10 @@
 
 namedCaller: passing JavaScript function arguments by name
 
-v.4.0
+v.4.1
 
-Copyright (c) 2015, 2019 by Sergey A Kryukov
+Copyright (c) 2015, 2019, 2025 by Sergey A Kryukov
 http://www.SAKryukov.org
-http://SAKryukov.org/freeware/calculator
-http://www.codeproject.com/Members/SAKryukov
 
 Published: http://www.codeproject.com/Articles/1045966/Named-Arguments-for-JavaScript-Functions-Yet-Anoth
 

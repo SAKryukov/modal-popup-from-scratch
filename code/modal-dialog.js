@@ -2,7 +2,7 @@
 
 Modal Dialog
 
-v.4.0
+v.4.1
 
 Copyright (c) 2025 by Sergey A Kryukov
 https://www.SAKryukov.org
