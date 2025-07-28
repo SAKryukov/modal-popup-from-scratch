@@ -262,7 +262,11 @@ window.onload = () => {
                 p.styles = { backgroundColor: { message: definitionSet.colors.message, buttonPad: definitionSet.colors.buttonPad } });
         }, null, true);
 
-        addButton("<b>Dialog:</b> Default", () => modalDialog.show("Default.<br/>See the cliboard copy button above.<br/>Use it to copy the message."));
+        const defaultDialogButton = 
+            addButton("<b>Dialog:</b> Default", () => modalDialog.show(
+                `Default.<br/>
+                See the cliboard copy button above.<br/>Use it to copy the message.<br/><br/>
+                The dialog can be closed by Escape, Enter, blankspace, or by a click on the button.`));
         addButton("<b>Dialog:</b> Multiple buttons, actions", () =>
             modalDialog.show(`<p>A button can be default, Escape or Enter</p><p><input style="width:100%" value="Press Enter or Escape in this input"/></p>`,
                 {
@@ -286,7 +290,7 @@ window.onload = () => {
                     buttons: [
                         { text: "Close", isEscape: true },
                         {
-                            text: "Default button, pre-focused", isDefault: true,
+                            text: "Default button, not pre-focused", isDefault: true,
                             action: () => add("Default button"),
                         },
                         {
@@ -298,12 +302,33 @@ window.onload = () => {
                     options: { equalButtonWidths: false, initialFocus: "input" },
                 }));
         addButton("<b>Dialog:</b> Equalized button widths", () => {
-            modalDialog.show("Equalized button widths,<br>the first button is Escape", {
+            modalDialog.show("Equalized button widths.<br>The first button is Escape.", {
                 buttons: [
                     { text: "Close", isEscape: true },
                     { text: "A", action: button => add(button.textContent), isDefault: true },
                     { text: "B", action: button => add(button.textContent), },
                 ]
+            });
+        });
+        addButton("<b>Dialog:</b> No closing by keyboard", () => {
+            modalDialog.show(`A dialog can be closes by Escape of Enter<br/>
+                if one of the buttons is specified as isEscape or isEnter.<br/>
+                This dialog cannot be closed by Escape of Enter`, {
+                buttons: [
+                    { text: "Close, not isEscape" },
+                    { text: "No isEscape or isEnter flags", action: button => add(button.textContent), isDefault: true },
+                    { text: "None of them", action: button => add(button.textContent), },
+                ]
+            });
+        });
+        addButton("<b>Dialog:</b> No-close buttons", () => {
+            modalDialog.show(`Some buttons can work without closing the dialog.<br/>
+                    Also note that Escape does not close this dialog,<br/>
+                    because none of the buttons is an Escape button.`, {
+                buttons: [
+                    { text: "Non-closing button", noClosing: true, action: button => add(button.textContent) },
+                    { text: "Normal closing button", noClosing: false, action: button => add(button.textContent) },
+                ],
             });
         });
         addButton("<b>Dialog:</b> Multiline buttons", () => {
@@ -323,7 +348,7 @@ window.onload = () => {
                     </p>This feature can be disabled, so the dialog is shown again in the center of the screen.</p>`,
                 { options: { drag: { usePreviousPosition: false } } });
         });
-        addButton("<b>Dialog:</b> Multipe styles", () =>
+        addButton("<b>Dialog:</b> Multiple styles", () =>
             modalDialog.show(`<p>A dialog can use alternative different CSS styles.<br/>One or more styles can be listed, separated by a blankspace.</p>`,
                 {
                     buttons: [
@@ -338,18 +363,8 @@ window.onload = () => {
                             action: () => modalDialog.show("Default dialog in different style", { options: { cssClasses: "different" } })
                         },
                     ],
-                    options: { equalButtonWidths: false, cssClasses: "different" },
+                    options: { equalButtonWidths: true, cssClasses: "different" },
                 }));
-        addButton("<b>Dialog:</b> No-close buttons", () => {
-            modalDialog.show(`Some buttons can work without closing the dialog.<br/>
-                    Also note that Escape does not close this dialog,<br/>
-                    because none of the buttons is an Escape button.`, {
-                buttons: [
-                    { text: "Non-closing button", noClosing: true, action: button => add(button.textContent) },
-                    { text: "Normal closing button", noClosing: false, action: button => add(button.textContent) },
-                ],
-            });
-        });
         addButton("<b>Dialog:</b> HTMLElement message", () => {
             const elements = [];
             const p1 = document.createElement("p");
@@ -370,6 +385,11 @@ window.onload = () => {
             modalDialog.show(elements,
                 { options: { initialFocus: textarea }});
         });
+        addButton("<b>Dialog:</b> Focus after closing", () => {
+            modalDialog.show(`After this dialog is closed, a specified element is focused.<br/>
+                In other cases, an attempt is made to focus on the element focused before showing the dialog.`,
+                { options: { focusAfterAction: defaultDialogButton }});
+        });
     }; //demo
 
     const autoAccessKey = new AutoAccessKey("ijcfnyT");
@@ -380,19 +400,19 @@ window.onload = () => {
         elements.scrollParent.scrollTop = elements.scrollParent.scrollHeight;
     }; //add
     const addButton = (caption, handler, forceAccessKeyIndex, separatorAfter) => {
-        const btn = document.createElement("button");
+        const button = document.createElement("button");
         const access = autoAccessKey.next(caption, forceAccessKeyIndex);
-        btn.innerHTML = access.value;
-        btn.accessKey = access.accessKey;
-        btn.onclick = handler;
-        btn.style.marginRight = window.getComputedStyle(elements.buttonParent).getPropertyValue("padding-left");
-        btn.style.marginBottom = window.getComputedStyle(elements.buttonParent).getPropertyValue("padding-top");
-        elements.buttonParent.appendChild(btn);
+        button.innerHTML = access.value;
+        button.accessKey = access.accessKey;
+        button.onclick = handler;
+        button.style.marginRight = window.getComputedStyle(elements.buttonParent).getPropertyValue("padding-left");
+        button.style.marginBottom = window.getComputedStyle(elements.buttonParent).getPropertyValue("padding-top");
+        elements.buttonParent.appendChild(button);
         if (separatorAfter) {
             const separator = document.createElement("nav");
             elements.buttonParent.appendChild(separator);
         } //if
-        return btn;
+        return button;
     }; //addButton
     const modifyElementAccessKey = (element, forceAccessKeyIndex) => {
         const access = autoAccessKey.next(element.innerHTML, forceAccessKeyIndex);
