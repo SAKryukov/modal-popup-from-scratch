@@ -265,8 +265,8 @@ window.onload = () => {
         const defaultDialogButton = 
             addButton("<b>Dialog:</b> Default", () => modalDialog.show(
                 `Default.<br/>
-                See the cliboard copy button above.<br/>Use it to copy the message.<br/><br/>
-                The dialog can be closed by Escape, Enter, blankspace, or by a click on the button.`));
+                See the clipboard copy button above.<br/>Use it to copy the message.<br/><br/>
+                The dialog can be closed by pressing Escape, Enter, the spacebar, or by clicking the button.`));
         addButton("<b>Dialog:</b> Multiple buttons, actions", () =>
             modalDialog.show(`<p>A button can be default, Escape or Enter</p><p><input style="width:100%" value="Press Enter or Escape in this input"/></p>`,
                 {
@@ -285,7 +285,7 @@ window.onload = () => {
                     options: { equalButtonWidths: false },
                 }));
         addButton("<b>Dialog:</b> Pre-focused element", () =>
-            modalDialog.show(`<p>An element inside message can be pre-focused</p><p><input/></p>`,
+            modalDialog.show(`<p>An element inside a message can be pre-focused</p><p><input value="Focus is here"/></p>`,
                 {
                     buttons: [
                         { text: "Close", isEscape: true },
@@ -311,19 +311,19 @@ window.onload = () => {
             });
         });
         addButton("<b>Dialog:</b> No closing by keyboard", () => {
-            modalDialog.show(`A dialog can be closes by Escape of Enter<br/>
-                if one of the buttons is specified as isEscape or isEnter.<br/>
-                This dialog cannot be closed by Escape of Enter`, {
+            modalDialog.show(`<p>A dialog can be closed by pressing Escape, Enter or the spacebar<br/>
+                if one of the buttons is specified as <code>isEscape</code> or <code>isEnter</code>.</p>
+                This dialog cannot be closed by Escape or Enter.`, {
                 buttons: [
-                    { text: "Close, not isEscape" },
-                    { text: "No isEscape or isEnter flags", action: button => add(button.textContent), isDefault: true },
+                    { text: "Close, not <code>isEscape</code>" },
+                    { text: "No <code>isEscape</code> or <code>isEnter</code> flags", action: button => add(button.textContent), isDefault: true },
                     { text: "None of them", action: button => add(button.textContent), },
                 ]
             });
         });
         addButton("<b>Dialog:</b> No-close buttons", () => {
             modalDialog.show(`Some buttons can work without closing the dialog.<br/>
-                    Also note that Escape does not close this dialog,<br/>
+                    Also note that Escape does not close this dialog<br/>
                     because none of the buttons is an Escape button.`, {
                 buttons: [
                     { text: "Non-closing button", noClosing: true, action: button => add(button.textContent) },
@@ -340,7 +340,7 @@ window.onload = () => {
             });
         });
         addButton("<b>Dialog:</b> Disabled dragging", () => {
-            modalDialog.show("<p>Previous dialog samples can be dragged</p><p>For this sample, dragging is disabled.</p>",
+            modalDialog.show("<p>Previous dialog samples can be dragged.</p><p>For this sample, dragging is disabled.</p>",
                 { options: { drag: { isEnabled: false } } });
         });
         addButton("<b>Dialog:</b> Reset position after dragging", () => {
@@ -349,7 +349,7 @@ window.onload = () => {
                 { options: { drag: { usePreviousPosition: false } } });
         });
         addButton("<b>Dialog:</b> Multiple styles", () =>
-            modalDialog.show(`<p>A dialog can use alternative different CSS styles.<br/>One or more styles can be listed, separated by a blankspace.</p>`,
+            modalDialog.show(`<p>A dialog can use alternative CSS styles.<br/>One or more styles can be listed, separated by a blank space character.</p>`,
                 {
                     buttons: [
                         { text: "Close", isEscape: true },
@@ -365,13 +365,13 @@ window.onload = () => {
                     ],
                     options: { equalButtonWidths: true, cssClasses: "different" },
                 }));
-        addButton("<b>Dialog:</b> HTMLElement message", () => {
+        addButton("<b>Dialog:</b> <code>HTMLElement</code> message", () => {
             const elements = [];
             const p1 = document.createElement("p");
-            p1.textContent = "A message can be a pre-created HTMLElement";
+            p1.innerHTML = "A message can be a pre-created <code>HTMLElement</code>";
             elements.push(p1);
             const p2 = document.createElement("p");
-            p2.textContent = "or an array of HTMLElement.";
+            p2.innerHTML = "or an array of <code>HTMLElement</code> objects.";
             elements.push(p2);
             const p3 = document.createElement("p");
             p3.innerHTML = "<br/>Note that the text area below is pre-focused:";
@@ -387,7 +387,7 @@ window.onload = () => {
         });
         addButton("<b>Dialog:</b> Focus after closing", () => {
             modalDialog.show(`After this dialog is closed, a specified element is focused.<br/>
-                In other cases, an attempt is made to focus on the element focused before showing the dialog.`,
+                In other cases, an attempt is made to focus on the element that was focused on before showing the dialog.`,
                 { options: { focusAfterAction: defaultDialogButton }});
         });
     }; //demo
