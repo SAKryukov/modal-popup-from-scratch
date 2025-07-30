@@ -378,7 +378,9 @@ window.onload = () => {
             elements.push(p3);
             const container = document.createElement("div");
             const textarea = document.createElement("textarea");
-            textarea.value = "Focus is here";
+            textarea.style.height = "5.1em";
+            textarea.style.resize = "none";
+            textarea.value = "Focus is here\n\nEven when the button is not focused, Enter or Escape work";
             textarea.style.width = "100%";
             container.appendChild(textarea);
             elements.push(container);

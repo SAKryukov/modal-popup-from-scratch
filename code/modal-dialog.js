@@ -174,13 +174,16 @@ const modalDialog = (() => {
     const setMessage = message => {
         if (message.constructor == String)
             elementSet.messageSection.innerHTML = message;
-        else if (message instanceof HTMLElement)
-            elementSet.messageSection.appendChild(message)
-        else if (message instanceof Array) {
-            for (let element of message)
-                if (!element instanceof HTMLElement) return;
-            for (let element of message)
-                elementSet.messageSection.appendChild(element);
+        else {
+            elementSet.messageSection.innerHTML = definitionSet.empty;
+            if (message instanceof HTMLElement)
+                elementSet.messageSection.appendChild(message)
+            else if (message instanceof Array) {
+                for (let element of message)
+                    if (!element instanceof HTMLElement) return;
+                for (let element of message)
+                    elementSet.messageSection.appendChild(element);
+            } //if
         } //if
     }; //setMessage
     // message is HTML content, HTMLElement or array of HTMLElement:
