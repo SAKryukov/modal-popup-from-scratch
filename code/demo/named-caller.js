@@ -2,7 +2,7 @@
 
 namedCaller: passing JavaScript function arguments by name
 
-v.4.1
+v.4.2
 
 Copyright (c) 2015, 2019, 2025 by Sergey A Kryukov
 http://www.SAKryukov.org
