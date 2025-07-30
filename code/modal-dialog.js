@@ -14,6 +14,12 @@ https://www.codeproject.com/Members/SAKryukov
 
 const modalDialog = (() => {
 
+    const metadata = {
+        version: "4.2",
+        date: 2025,
+    }; //metadata
+    Object.freeze(metadata);
+
     const definitionSet = {
         keys: {
             Enter: 0, Escape: 0, KeyC: 0, Insert: 0,
@@ -273,7 +279,7 @@ const modalDialog = (() => {
         elementSet.dialog.onfocus = () => restoreFocus();
     }; //this.show
 
-    const result = { show, defaultSingleButton };
+    const result = { show, defaultSingleButton, metadata };
     Object.defineProperties(result, {
         defaultButtons: { get() { return [ defaultSingleButton(definitionSet.names.Close) ]; } },
         defaultOptions: { get() { return structuredClone(defaultOptions); } },

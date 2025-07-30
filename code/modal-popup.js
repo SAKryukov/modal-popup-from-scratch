@@ -16,9 +16,6 @@ Published: https://sakryukov.github.io/publications/2015-12-02.Modal-Popup-From-
 
 const modalPopup = {
 
-    version: "4.2",
-    date: 2025,
-
     show: function(content, buttonDescriptors, styles, onEndModalState, focusReturnElement) {
 
         if (!this.instance) {

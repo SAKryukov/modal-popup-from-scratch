@@ -33,8 +33,8 @@ window.onload = () => {
         version: document.querySelector("footer small span:last-of-type"),
     } //elements
 
-    elements.date.textContent = modalPopup.date;
-    elements.version.textContent = modalPopup.version;
+    elements.date.textContent = modalDialog.metadata.date;
+    elements.version.textContent = modalDialog.metadata.version;
 
     const demo = () => {
 
