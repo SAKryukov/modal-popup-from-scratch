@@ -53,6 +53,18 @@ Published: http://www.codeproject.com/Articles/1061121/ModalPopupFromScratch
             div.insanityLabel { display: table-cell; vertical-align: top; padding-right: 0.6em; }
             div.insanity { display: table-cell; }
             option { margin-left: 1em; margin-right: 1em; }
+            header > section button {
+                background-color: hsl(194, 71%, 93%);
+                border: thin solid hsl(194, 28%, 47%);
+                outline: 1px solid transparent;
+            }
+            header > section button:focus {
+                background-color: white;
+                border: thin solid black;
+                outline: 1px solid black;
+                outline-offset: 1px;
+            }
+            header > section button:active { background-color: lightblue ; }
             dialog p { margin: 0; margin-bottom: var(--vertical-gap); }
             dialog.different > section:first-of-type { background-color: Cornsilk; }
             dialog.different > section:last-of-type { background-color: hsl(6, 70%, 40%, 100%); }
@@ -61,6 +73,7 @@ Published: http://www.codeproject.com/Articles/1061121/ModalPopupFromScratch
             input, textarea { padding-left: 1em; padding-right: 1em; }
         </style>
     </head>
+
 <body>
 
     <aside>Sorry, your browser does not support essential required features</aside>
