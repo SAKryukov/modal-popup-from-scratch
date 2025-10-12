@@ -2,7 +2,7 @@
 
 Modal Dialog
 
-v.4.3
+v.4.4
 
 Copyright (c) 2025 by Sergey A Kryukov
 https://www.SAKryukov.org
@@ -15,7 +15,7 @@ https://www.codeproject.com/Members/SAKryukov
 const modalDialog = (() => {
 
     const metadata = {
-        version: "4.3",
+        version: "4.4",
         date: 2025,
     }; //metadata
     Object.freeze(metadata);
@@ -125,7 +125,7 @@ const modalDialog = (() => {
         elementSet.dialog.appendChild(elementSet.buttonSection);
         elementSet.dialog.onkeydown = event => {
             //SA!!! priority fixing for v.4.3:
-            // if a control in focus is a button, it should be clicked instead of buttonSet.enterButton:            
+            // if a control in focus is a button, it should be clicked instead of buttonSet.enterButton:
             if (event.code == definitionSet.keys.Enter && document.activeElement && document.activeElement instanceof HTMLButtonElement) {
                 document.activeElement(click);
                 event.preventDefault();
@@ -149,7 +149,7 @@ const modalDialog = (() => {
         copyElement.style.position = definitionSet.names.absolute;
         copyElement.title = definitionSet.titleClipboardCopy;
         elementSet.dialog.appendChild(copyElement);
-        copyElement.onclick = () => 
+        copyElement.onclick = () =>
             navigator.clipboard.writeText(elementSet.messageSection.innerHTML);
     }; //setupDialog
 
